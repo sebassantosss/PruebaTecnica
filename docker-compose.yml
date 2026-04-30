@@ -1,0 +1,49 @@
+services:
+  # 1. Base de Datos MySQL
+  db:
+    image: mysql:8.0
+    container_name: mysql-farmacia
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+      MYSQL_DATABASE: farmacia
+    ports:
+      - "3306:3306"
+    volumes:
+      # Este mapeo ejecuta tu script SQL automáticamente la primera vez que se crea la BD
+      - ./DB_FARMACIA.sql:/docker-entrypoint-initdb.d/init.sql
+      # Volumen para persistir los datos de la base de datos (opcional pero recomendado)
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # 2. Backend Spring Boot
+  backend:
+    build: 
+      context: ./farmacia
+      dockerfile: Dockerfile
+    container_name: backend-farmacia
+    ports:
+      - "8080:8080"
+    environment:
+      # Sobrescribimos la variable para que apunte al contenedor 'db' en lugar de localhost
+      - DB_HOST=db
+    depends_on:
+      db:
+        condition: service_healthy
+
+  # 3. Frontend React (Vite)
+  frontend:
+    build:
+      context: ./mi-proyecto-react
+      dockerfile: Dockerfile
+    container_name: frontend-farmacia
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+
+volumes:
+  mysql_data:
