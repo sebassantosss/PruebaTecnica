@@ -25,7 +25,10 @@ function ProductoList() {
       <ul>
         {productos.map((p) => (
           <li key={p.id}>
-            {p.nombre} - {p.codigo} - {p.estado}
+            <div className="item-info">
+              <span className="item-name">{p.nombre}</span>
+              <span className="item-details">Código: {p.codigo} &bull; Estado: {p.estado}</span>
+            </div>
             <button onClick={() => handleDelete(p.id)}>Eliminar</button>
           </li>
         ))}

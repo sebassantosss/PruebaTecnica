@@ -1,14 +1,23 @@
 package com.cetus.farmacia.controller;
 
-import com.cetus.farmacia.model.entity.ProductosEntity;
-import com.cetus.farmacia.service.ProductoService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.cetus.farmacia.model.entity.ProductosEntity;
+import com.cetus.farmacia.service.ProductoService;
+
+@CrossOrigin("*")
 @RestController
 @RequestMapping("api/producto")
 public class ProductoController {
@@ -16,12 +25,12 @@ public class ProductoController {
     @Autowired
     private ProductoService productoService;
 
-    @GetMapping
-    public List<ProductosEntity> getProducto(){
+    @GetMapping("/listar")
+    public List<ProductosEntity> getProducto() {
         return productoService.getAll();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/listar/{id}")
     public ResponseEntity<ProductosEntity> getProductoById(@PathVariable Integer id) {
         Optional<ProductosEntity> productosEntity = productoService.findById(id);
         if (productosEntity.isPresent()) {

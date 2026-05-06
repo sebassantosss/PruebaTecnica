@@ -6,10 +6,10 @@ export const createProducto = (producto) =>
   axios.post(`${API_URL}/guardarProducto`, producto);
 
 export const getProductoById = (id) =>
-  axios.get(`${API_URL}/${id}`);
+  axios.get(`${API_URL}/listar/${id}`);
 
 export const getProductos = () =>
-  axios.get(`${API_URL}/listarProductos`);
+  axios.get(`${API_URL}/listar`);
 
 export const deleteProducto = (id) =>
   axios.delete(`${API_URL}/${id}`);
