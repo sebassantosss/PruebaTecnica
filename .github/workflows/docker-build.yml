@@ -21,13 +21,13 @@ jobs:
       - name: Build y push Backend
         uses: docker/build-push-action@v5
         with:
-          context: ./backend
+          context: ./farmacia
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/backend:latest
 
       - name: Build y push Frontend
         uses: docker/build-push-action@v5
         with:
-          context: ./frontend
+          context: ./mi-proyecto-react
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/frontend:latest
