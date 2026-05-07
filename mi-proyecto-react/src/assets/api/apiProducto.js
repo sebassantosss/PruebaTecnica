@@ -11,6 +11,8 @@ export const getProductoById = (id) =>
 export const getProductos = () =>
   axios.get(`${API_URL}/listar`);
 
+
 export const deleteProducto = (id) =>
   axios.delete(`${API_URL}/${id}`);
 
+  
